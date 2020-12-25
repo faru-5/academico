@@ -1,0 +1,95 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load course_tags %}
+{% load crispy_forms_tags %}
+{% block title %}courses | ACADEMICO{% endblock %}
+
+{% block menu %}
+	<ul class="main_nav">
+		<li ><a href="{% url 'homepage' %}">Home</a></li>
+		<li><a href="{% url 'courses' %}">Courses</a></li>
+		<li><a href="instructors.html">Instructors</a></li>
+		<li><a href="blog.html">Blog</a></li>
+		<li><a href="contact.html">Contact</a></li>
+	</ul>
+{% endblock %}
+{% block content %}
+
+
+    <div class="register">
+		<div class="container">
+			<div class="row">
+				
+				<!-- Login Form -->
+
+				<div class="col-lg-6">
+					{% if messages %}
+						{% for message in messages %}
+							<h4 class="alert alert-success">an account with username <code>{{ message }}</code> has been created.</h4>
+							<h4 class="container alert alert-info"> please login again</h4>
+						{% endfor %}
+					{% endif %}
+					<div class="register_form_container">
+						<div class="register_form_title"><center>Login</center></div>
+						<form method="POST" id="register_form" class="register_form">
+							{% csrf_token %}
+							
+							<div class="row register_row">      
+								{% if form.errors %}
+								<h5 class="container m-4">
+									<code>Your username and password didn't match. </code> <br>
+									<code class="container">Please try again.</code>
+								</h5>
+							{% endif %}
+                                <div id="div_id_username" class="col-lg-6 register_col"> 
+                                    <div class="col"> 
+                                        <input placeholder="Username" type="text" name="username"  
+                                        autocapitalize="none" autocomplete="username" maxlength="150" 
+                                        class=" form_input" required id="id_username"> 
+                                    </div>
+                                </div> 
+                                <div id="div_id_password" class="col-lg-6 register_col form-group">
+                                    <div class="col"> 
+                                        <input type="password" placeholder="Password" name="password" autocomplete="current-password" 
+                                        class="form_input" required id="id_password"> 
+                                    </div> 
+                                </div>
+								<div class="col">
+									<button type="submit" class="form_button trans_200">Sign In</button>
+								</div>
+							</div>
+							<div class="container p-3">
+								<h5>Don't have an account <a class="" href="{% url 'register' %}"><u>Sign Up</u></a></h5>
+							</div>
+							<div class="container btn text-right ">
+								<u><a href="#">Forgot your password? </a></u>
+							</div>
+						</form>
+					</div>
+				</div>
+
+				<!-- Register Timer -->
+
+				<div class="col-lg-6">
+					<div class="register_timer_container">
+						<div class="register_timer_title">Buy Courses Now</div>
+						<div class="register_timer_text">
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce enim nulla, mollis eu metus in, sagittis fringilla tortor.</p>
+						</div>
+						<div class="timer_container">
+							<ul class="timer_list">
+								<li><div id="hour" class="timer_num">00</div><div class="timer_ss">hours</div></li>
+								<li><div id="minute" class="timer_num">00</div><div class="timer_ss">minutes</div></li>
+								<li><div id="second" class="timer_num">00</div><div class="timer_ss">seconds</div></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    <!-- form itself end-->
+    <div class="container">
+        
+    </div>
+{% endblock %}

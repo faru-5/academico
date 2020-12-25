@@ -1,0 +1,24 @@
+<div class="container">  
+  <p>
+    <div class="container">
+      <form method="get">
+        <input type="search" name="search" id="id_search" placeholder="course name" style="width: 20%;" class="form_input ">
+        <button class="alert sm" style="text-decoration: none;" type="submit"><i class="fa fa-search"></i></button>
+      </form>
+    </div>
+    <button class="btn " type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1"><i class="fa fa-filter"></i> Filter</button>
+  </p>
+  <div class="row">
+    <div class="col">
+      <div class="collapse multi-collapse" id="multiCollapseExample1">
+        <div class="card card-body"><form method="get">
+          {{courseFilter.form }}
+          <button class="alert alert-info" type="submit">Search</button>
+        </form>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+</div>

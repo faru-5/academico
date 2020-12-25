@@ -1,0 +1,307 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load course_tags %}
+
+{% block title %}{{course|truncatewords:10}} | ACADEMICO{% endblock %}
+
+{% block menu %}
+    <li ><a href="{% url 'homepage' %}">Home</a></li>
+    <li><a class="active" href="{% url 'courses' %}">Courses</a></li>
+    <li><a href="instructors.html">Instructors</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="contact.html">Contact</a></li>
+{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'styles/style.css' %}">
+	<!-- Home -->
+
+	<div class="container p-5">
+		<div class="col">
+			<ul class="breadcrumbs_list d-flex flex-row align-items-center justify-content-start">
+				
+			</ul>
+		</div>
+    </div>
+
+
+
+    <!--================ Start Course Details Area =================-->
+    <section class="course_details_area section_padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 course_details_left">
+                    <div class="main_image">
+                        {% if course.coverImage %}
+                            <img class="img-fluid" src="{{ course.coverImage.url}}" alt="">
+                        {% else %}
+                            <div style="
+                                min-width: 100%;
+                                min-height: 300px;
+                                background-color: chartreuse;
+                                align-items: center;
+                                justify-content: center;
+                                display: flex;
+                                flex-direction: column;
+                            " class="">
+                                <div class="">
+                                    <center>
+                                        <h1 style="font-family:fantasy; font-size: 50px;">{{ course.title.upper}}</h1>
+                                        <h4 class="float-right"><span>by </span><strong>{{course.instructor }}</strong></h4>
+                                    </center>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="content_wrapper">
+                        <div class="bold p-5">
+                            <h1 title="{{course.title}}">{{ course.title}}</h1>
+                            {% if course.instructor.id == user.id %}
+                                    <a href="{% url 'edit_course' course.id %}" class=" btn-warning btn-sm btn-icon-split">
+                                        <span class="icon text-white-0">
+                                          <i class="fa fa-edit"></i>
+                                        </span>
+                                        <span class="text">Edit</span>
+                                      </a>
+                            {% endif %}
+                        </div>
+                        <div class="sm border border-success">
+                            {% for tags in course.tags.all %}
+                            <a href="#"><small  class="alert border border-success bg-light sm" >{{ tags }}</small></a>
+                            {% endfor %}
+                        </div>
+                        <h4 class="title_top">Objectives</h4>
+                        <div class="content">
+                            {% if course.overview %}
+                                <br>
+                                <br>
+                                {{ course.overview }}
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore
+                            {% else %}
+                                <br>
+                                <br>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore
+                                magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+                                ut aliquip ex ea
+                                commodoconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                                cillum. Lorem ipsum dolor sit
+                                amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                                dolore magna aliqua. Ut enim
+                                ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                                commodo consequat. Duis aute
+                                irure dolor in reprehenderit in voluptate velit esse cillum.
+                            {% endif %}
+                        </div>
+
+                        <h4 class="title">Eligibility</h4>
+                        <div class="content">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                            incididunt ut labore et dolore
+                            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+                            ut aliquip ex ea commodo
+                            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.
+                            <br>
+                            <br>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                            incididunt ut labore et dolore
+                            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+                            ut aliquip ex ea
+                            commodoconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                            cillum. Lorem ipsum dolor sit
+                            amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                            dolore magna aliqua. Ut enim
+                            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                            commodo consequat. Duis aute
+                            irure dolor in reprehenderit in voluptate velit esse cillum.
+                        </div>
+                        
+                        <h4 class="title">Course Outline</h4>
+                        <div class="content">
+                            <ul class="course_list">
+                                {% module_list course.id %}
+                                <!-- <li class="justify-content-between align-items-center d-flex">
+                                    <p>Basics of HTML</p>
+                                    <a class="btn_2 text-uppercase" href="#">View Details</a>
+                                </li> -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-4 right-contents">
+                    {% if course.coursevideo %}
+                        <iframe width="500" height="300" src="{{course.coursevideo }}" frameborder="0"></iframe>
+                    {% endif %}
+                    <div class="sidebar_top">
+                        <ul>
+                            <li>
+                                <a class="justify-content-between d-flex" href="#">
+                                    <p>Trainer’s Name</p>
+                                    <span class="color">{{ course.instructor }}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="justify-content-between d-flex" href="#">
+                                    <p>Course Fee </p>
+                                    <span>
+                                        {% if course.cost == 'Free' %}
+                                            {{ course.cost }}
+                                        {% else %}
+                                            ${{ course.cost }}
+                                        {% endif %}
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="justify-content-between d-flex" href="#">
+                                    <p>Modules </p>
+                                    <span>{% total_modules course.id%}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="justify-content-between d-flex" href="#">
+                                    <p>Rating </p>
+                                    <span><i class="fa fa-star"></i>{{ course.rating }}</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                        <a href="#" class="btn_1 d-block">Enroll the course</a>
+                    </div>
+
+                    <h4 class="title">Reviews</h4>
+                    <div class="content">
+                        <div class="review-top row pt-40">
+                            <div class="col-lg-12">
+                                <h6 class="mb-15">Provide Your Rating</h6>
+                                <div class="d-flex flex-row reviews justify-content-between">
+                                    <span>Quality</span>
+                                    <div class="rating">
+                                            <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+                                            <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+                                            <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+                                            <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+                                            <a href="#"><img src="img/icon/star.svg" alt=""></a>
+                                        </div>
+                                    <span>Outstanding</span>
+                                </div>
+                                <div class="d-flex flex-row reviews justify-content-between">
+                                    <span>Puncuality</span>
+                                    <div class="rating">
+                                            <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+                                            <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+                                            <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+                                            <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+                                            <a href="#"><img src="img/icon/star.svg" alt=""></a>
+                                        </div>
+                                    <span>Outstanding</span>
+                                </div>
+                                <div class="d-flex flex-row reviews justify-content-between">
+                                    <span>Quality</span>
+                                    <div class="rating">
+                                            <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+                                            <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+                                            <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+                                            <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+                                            <a href="#"><img src="img/icon/star.svg" alt=""></a>
+                                        </div>
+                                    <span>Outstanding</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="feedeback">
+                            <h6>Your Feedback</h6>
+                            <textarea name="feedback" class="form-control" cols="10" rows="10"></textarea>
+                            <div class="mt-10 text-right">
+                                <a href="#" class="btn_1">Read more</a>
+                            </div>
+                        </div>
+                        <div class="comments-area mb-30">
+                            <div class="comment-list">
+                                <div class="single-comment single-reviews justify-content-between d-flex">
+                                    <div class="user justify-content-between d-flex">
+                                        <div class="thumb">
+                                            <img src="img/cource/cource_1.png" alt="">
+                                        </div>
+                                        <div class="desc">
+                                            <h5><a href="#">Emilly Blunt</a>
+                                            </h5>
+                                            <div class="rating">
+                                                <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+                                                <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+                                                <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+                                                <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+                                                <a href="#"><img src="img/icon/star.svg" alt=""></a>
+                                            </div>
+                                            <p class="comment">
+                                                Blessed made of meat doesn't lights doesn't was dominion and sea earth
+                                                form
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comment-list">
+                                <div class="single-comment single-reviews justify-content-between d-flex">
+                                    <div class="user justify-content-between d-flex">
+                                        <div class="thumb">
+                                            <img src="img/cource/cource_2.png" alt="">
+                                        </div>
+                                        <div class="desc">
+                                            <h5><a href="#">Elsie Cunningham</a>
+                                            </h5>
+                                            <div class="rating">
+                                                <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+                                                <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+                                                <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+                                                <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+                                                <a href="#"><img src="img/icon/star.svg" alt=""></a>
+                                            </div>
+                                            <p class="comment">
+                                                Blessed made of meat doesn't lights doesn't was dominion and sea earth
+                                                form
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comment-list">
+                                <div class="single-comment single-reviews justify-content-between d-flex">
+                                    <div class="user justify-content-between d-flex">
+                                        <div class="thumb">
+                                            <img src="img/cource/cource_3.png" alt="">
+                                        </div>
+                                        <div class="desc">
+                                            <h5><a href="#">Maria Luna</a>
+                                            </h5>
+                                            <div class="rating">
+                                                <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+                                                <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+                                                <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+                                                <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+                                                <a href="#"><img src="img/icon/star.svg" alt=""></a>
+                                            </div>
+                                            <p class="comment">
+                                                Blessed made of meat doesn't lights doesn't was dominion and sea earth
+                                                form
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================ End Course Details Area =================-->
+
+
+	<!-- Footer -->
+{% endblock %}

@@ -1,0 +1,141 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load course_tags %}
+
+{% block title %}courses | ACADEMICO{% endblock %}
+{% block menu %}
+		<li ><a href="{% url 'homepage' %}">Home</a></li>
+		<li><a class="active" href="{% url 'courses' %}">Courses</a></li>
+		<li><a href="instructors.html">Instructors</a></li>
+		<li><a href="blog.html">Blog</a></li>
+		<li><a href="contact.html">Contact</a></li>
+{% endblock %}
+{% block content %}
+	<!-- Home -->
+
+	<div class="container p-5">
+		<div class="col">
+			<ul class="breadcrumbs_list d-flex flex-row align-items-center justify-content-start">
+				
+			</ul>
+		</div>
+	</div>
+	<!-- Language -->
+
+	
+
+	<div class="language">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="language_slider_container">
+						
+						<!-- Language Slider -->
+
+						<div class="owl-carousel owl-theme language_slider  mb-3">
+
+							<!-- Flag -->
+
+							{% for subject in subjects %}
+								<!-- Flag -->
+								<div class="owl-item language_item ">
+									<a href="#">
+										<!-- <div class="flag"><img src="images/Italian.svg" alt=""></div> -->
+										<a class="alert alert-info">{{subject}}</a>
+									</a>
+								</div>
+							{% endfor %}
+
+							<!-- end iteration of subjects -->
+
+						</div>
+
+						<div class="lang_nav lang_prev"><i class="fa fa-angle-left" aria-hidden="true"></i></div>
+						<div class="lang_nav lang_next"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% include 'courses/filter/course_filter.html' %}
+	<!-- courses begin here-->
+
+	<div class="courses">
+		<div class="courses_background"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<h2 class="section_title text-center">Our Popular Courses</h2>
+				</div>
+			</div>
+			<div class="row courses_row">
+				{% for course in courses %}
+				<!-- Course -->
+				<div class="col-lg-4 course_col">
+					<div class="course">
+						<div class="course_image">
+							{% if course.coverImage %}
+								 <img height="200" src="{{ course.coverImage.url}}" alt="">
+								 {% else %}
+								 <div style="
+									 min-width: 100%;
+									 min-height: 300px;
+									 background-color: chartreuse;
+									 align-items: center;
+									 justify-content: center;
+									 display: flex;
+									 flex-direction: column;
+								 " class="">
+									 <div class="">
+										 <center>
+											 <h1 style="font-family:fantasy; font-size: 50px;">{{ course.title.upper}}</h1>
+											 <h4 class="float-right mr-5"><span>by </span><strong>{{course.instructor }}</strong></h4>
+										 </center>
+									 </div>
+								 </div>
+							 {% endif %}
+						</div>
+						<div class="course_body">
+							<div class="course_title"><a href="{% url 'course_detail' course.id %}">{{ course }}</a></div>
+							<div class="course_info">
+								<ul>
+									<li><a href="instructors.html"><u>{{ course.instructor }}</u></a></li>
+									<li><a href="#">{{ course.subject }}</a></li>
+								</ul>
+							</div>
+							<div class="course_text">
+								<p>{{ course.overview|truncatewords:20 }}</p>
+							</div>
+							<div class="course_text ">
+								<small>{{ course.date_created|date:"M d, Y" }}</small>
+							</div>
+						</div>
+						<div class="course_footer d-flex flex-row align-items-center justify-content-start">
+							<div class="course_students"><i class="fa fa-list" aria-hidden="true"></i><span>{% total_modules course.id %}</span></div>
+							<div class="course_rating ml-auto"><i class="fa fa-star" aria-hidden="true"></i><span>{{ course.rating}}</span></div>
+							{% if course.cost == 'Free'%} 
+								<div class="course_mark course_free trans_200"> 
+							{% else %}
+							<div class="course_mark trans_200">
+							{% endif %}
+								<a href="#">
+									{% if course.cost == 'Free'%} 
+										{{course.cost}}
+									{% else %}
+										${{course.cost}} 
+									{% endif %}
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endfor %} 
+			</div>
+		</div>
+	</div>
+
+	<!-- courses ends here -->
+
+
+	<!-- Footer -->
+{% endblock %}

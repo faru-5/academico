@@ -1,0 +1,68 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load course_tags %}
+
+{% block title %}courses | ACADEMICO{% endblock %}
+{% block menu %}
+    <li ><a href="{% url 'homepage' %}">Home</a></li>
+    <li><a class="active" href="{% url 'courses' %}">Courses</a></li>
+    <li><a href="instructors.html">Instructors</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="contact.html">Contact</a></li>
+{% endblock %}
+
+{% block content %}
+
+
+
+<div class="container p-5">
+    <div class="row mb-3 p-5">
+      <div class="col-md-5 themed-grid-col">
+        <div class="p-4">
+            <h2>{{ module.course.title }}</h2><span> by {{ module.course.instructor }}</span>
+        </div>
+        <div class="p-4">
+            <h4>{{ module.title }}</h4>
+        </div>
+        {% if module.description %}
+        -------------------------------<br>
+            {{ module.description }}
+        {% endif %}
+        {% if module.moduleFile %}
+        <div class="video">
+            <video controls draggable="true" width="900" src="{{ module.moduleFile.url }}"></video>
+        </div>
+        {% endif %}
+      </div>
+
+
+      <div class="col-md-5 themed-grid-col">
+        <div class="p-4">
+            <hr><u><h5>{{ module.title.title }}</h3></u></hr>
+        </div>
+        {% if module.video %}
+        
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="{{ module.video }}" allowfullscreen></iframe>
+          </div>
+        {% endif %}
+        <a href="" class="btn float-right btn-success m-2 btn-icon-split">
+            <span class="icon text-white-10">
+            <i class="fa fa-check"></i>
+            </span>
+            <span class="text">Next</span>
+        </a>
+    </div>
+    <div class="col-md-2 themed-grid-col">
+     <center>advertisment here</center>
+     <div class="container border border-danger">
+        <h5>LSSYIA.net</h5>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+            Enim adipisci asperiores, non iure eos quae
+            eque, iste atque doloremque veniam minima saepe eveniet?</p>
+     </div>
+     
+    </div>
+</div>
+</div>
+{% endblock %}

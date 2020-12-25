@@ -1,0 +1,101 @@
+{% load static %}
+{% load course_tags %}
+
+{% for module in modulelists %}
+<li class="justify-content-between align-items-center d-flex">
+    <p> {{ module.order }}. {{ module|truncatewords:15 }}</p>
+    <a class="btn_2 text-uppercase" href="{% url 'module' module.id %}">View Details</a>
+</li>
+{% endfor %}
+
+
+    {% for course in courses %}
+    <!-- Course -->
+    <div class="col-lg-4 course_col">
+        <div class="course">
+            <div class="course_image">
+                {% if course.coverImage %}
+                <img height="200" src= " {{ course.coverImage.url}}" alt="">
+                    {% else %}
+                            <div style="
+                                min-width: 100%;
+                                min-height: 300px;
+                                background-color: chartreuse;
+                                align-items: center;
+                                justify-content: center;
+                                display: flex;
+                                flex-direction: column;
+                            " class="">
+                                <div class="">
+                                    <center>
+                                        <h1 style="font-family:fantasy; font-size: 50px;">{{ course.title.upper}}</h1>
+                                        <h4 class="float-right mr-5"><span>by </span><strong>{{course.instructor }}</strong></h4>
+                                    </center>
+                                </div>
+                            </div>
+                        {% endif %}
+            </div>
+            <div class="course_body">
+                <div class="course_title"><a href="{% url 'course_detail' course.id %}">{{ course }}</a></div>
+                <div class="course_info">
+                    <ul>
+                        <li><a href="instructors.html"><u>{{ course.instructor }}</u></a></li>
+                        <li><a href="#">{{ course.subject }}</a></li>
+                    </ul>
+                </div>
+                <div class="course_text">
+                    <p>{{ course.overview|truncatewords:20 }}</p>
+                </div>
+                <div class="course_text ">
+                    <small>{{ course.date_created|date:"M d, Y" }}</small>
+                </div>
+            </div>
+            <div class="course_footer d-flex flex-row align-items-center justify-content-start">
+                <div class="course_students"><i class="fa fa-list" aria-hidden="true"></i><span>{% total_modules course.id %}</span></div>
+                <div class="course_rating ml-auto"><i class="fa fa-star" aria-hidden="true"></i><span>4,5</span></div>
+                <div class="course_mark course_free trans_200"><a href="#">Free</a></div>
+            </div>
+        </div>
+    </div>
+    {% endfor %} 
+    
+
+
+
+{% for tutor in tutors %}
+<!-- Instructor -->
+<div class="col-lg-4 instructor_col">
+    <div class="instructor text-center">
+        <div class="instructor_image_container">
+            <div class="instructor_image"><img src="{% static 'images/instructor_2.jpg' %}" alt=""></div>
+        </div>
+        <div class="instructor_name"><a href="instructors.html">@{{ tutor.username }}</a></div>
+        <div class="instructor_title">Teacher</div>
+        <div class="instructor_text">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce enim nulla, mollis eu metus in, sagittis fringilla tortor.</p>
+        </div>
+        <div class="instructor_social">
+            <ul>
+                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+<!-- tags list -->
+
+{% for tag in tags %}
+<!-- Flag -->
+<div class="owl-item language_item ">
+    <a href="#">
+        <!-- <div class="flag"><img src="images/Italian.svg" alt=""></div> -->
+        <a class="alert alert-info"> {{ tag }}</a>
+    </a>
+</div>
+{% endfor %}
+
+<!-- course list for techers view -->
+

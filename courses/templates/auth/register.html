@@ -1,0 +1,120 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load course_tags %}
+{% load crispy_forms_tags %}
+
+{% block title %}register | ACADEMYCO{% endblock %}
+
+{% block menu %}
+        <li ><a href="{% url 'homepage' %}">Home</a></li>
+        <li><a href="{% url 'courses' %}">Courses</a></li>
+        <li><a href="instructors.html">Instructors</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+{% endblock %}
+
+{% block content %}
+
+<div class="register">
+    <div class="container">
+        <div class="row">
+            
+            <!-- Register Form -->
+
+            <div class="col-lg-6">
+                <div class="register_form_container">
+                    <div class="register_form_title">Register Here</div>
+                    <form method="POST" id="register_form" class="register_form">
+                        {% csrf_token %}
+
+                        
+                        <div class="row register_row">
+                            <div class="col-lg-6 register_col">
+                                <input class="form_input" type="text"  placeholder="First Name" name="first_name" required id="id_firstname">
+                            </div>
+                            <div class="col-lg-6 register_col">
+                                <input class="form_input" type="text" name="last_name" placeholder="Last Name" required id="id_lastname">
+                            </div>
+                            <div class="col-lg-6 register_col">
+                                <input class="form_input" type="text" name="username" maxlength="150" placeholder="username" required id="id_username"><br>
+                                <span class="helptext">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</span>
+                            </div>
+                            <div class="col-lg-6 register_col">
+                                <input type="email" class="form_input" placeholder="email" name="email" required id="id_email">
+                            </div>
+                            <div class="col-lg-6 register_col">
+                                <input type="password" placeholder="password" class="form_input" name="password1" autocomplete="new-password" required id="id_password1"><br>
+                                <span class="helptext">
+                                    <ul>
+                                        <li><small>password can’t be too similar to your other personal information.</small></li>
+                                        <li><small>Your password must contain at least 8 characters.</small></li>
+                                        <li><small>Your password can’t be a commonly used password.</small></li>
+                                        <li><small>Your password can’t be entirely numeric.</small></li>
+                                    </ul>
+                                </span>
+                            </div>
+                            <div class="col-lg-6 register_col">
+                                <input type="password" class="form_input" placeholder="repeat password" name="password2" autocomplete="new-password" required id="id_password2"><br><span class="helptext">Enter the same password as before, for verification.</span>
+                            </div>
+                            <div class="col-lg-6 register_col">
+                                <input type="checkbox" name="is_teacher" class="checkboxinput form-check-input" id="id_is_teacher"> 
+                                <label for="id_is_teacher" class="form-check-label">
+                                Are You a Teacher
+                                </label>
+                            </div>
+            
+
+<!-- 							
+                        <div class="row register_row">
+                            <div class="col-lg-6 register_col">
+                                <input type="text" class="form_input" placeholder="First Name" required="required">
+                            </div>
+                            <div class="col-lg-6 register_col">
+                                <input type="text" class="form_input" placeholder="Last Name" required="required">
+                            </div>
+                            <div class="col-lg-6 register_col">
+                                <input type="email" class="form_input" placeholder="Email" required="required">
+                            </div>
+                            <div class="col-lg-6 register_col">
+                                <input type="tel" class="form_input" placeholder="Phone">
+                            </div>
+                            <div class="col-lg-6 register_col">
+                                <input type="password" class="form_input" placeholder="password">
+                            </div>
+                            <div class="col-lg-6 register_col">
+                                <input type="password" class="form_input" placeholder="repeat password">
+                            </div> -->
+                            <div class="col">
+                                <button type="submit" class="form_button trans_200">Sign Up</button>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <p>Already have an account <a href="{% url 'login' %}">Log In</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Register Timer -->
+
+            <div class="col-lg-6">
+                <div class="register_timer_container">
+                    <div class="register_timer_title">Register Now</div>
+                    <div class="register_timer_text">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce enim nulla, mollis eu metus in, sagittis fringilla tortor.</p>
+                    </div>
+                    <div class="timer_container">
+                        <ul class="timer_list">
+                            <li><div id="day" class="timer_num">00</div><div class="timer_ss">days</div></li>
+                            <li><div id="hour" class="timer_num">00</div><div class="timer_ss">hours</div></li>
+                            <li><div id="minute" class="timer_num">00</div><div class="timer_ss">minutes</div></li>
+                            <li><div id="second" class="timer_num">00</div><div class="timer_ss">seconds</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
